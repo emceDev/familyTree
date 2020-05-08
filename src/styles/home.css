@@ -1,0 +1,40 @@
+/* .MemberComponent{
+    background-color: crimson;
+    margin:1vh 1vw 1vh 1vw;
+    display: flex;
+}
+.MemberChildren{
+    background-color: darkcyan;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+.MemberData{
+    background-color: darkgreen;
+}
+.card{
+    background-color: darkgoldenrod;
+} */
+.MemberComoponent{
+    margin-left: 2vw;
+}
+.MemberData{
+
+}
+.MemberChildren{
+    display: flex;
+    justify-content: space-evenly;
+}
+.Partners{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.addRelativeButtons{
+    animation: appear 1s;
+}
+@keyframes appear{
+    0%{opacity:0}
+    100%{opacity:1}
+}

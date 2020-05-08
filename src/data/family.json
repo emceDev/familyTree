@@ -1,0 +1,23 @@
+{   
+    "Smithsons":[
+        {
+        "id":"1",
+         "name":"radek",
+         "surname":"kradek",
+         "age":"32",
+         "job":"unemployed",
+         "siblingId":[
+             "2" 
+         ]
+     },
+     {
+         "id":"2",
+         "name":"Barbara",
+         "surname":"Barabara",
+         "age":"69",
+         "job":"unemployed",
+         "siblingId":[
+             "1"
+         ]
+     }]
+}
