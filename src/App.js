@@ -10,7 +10,6 @@ function App() {
     <div className="App">
       <Router>
         <div style={{position:"sticky",top:"0",zIndex:"2"}}>
-        <Navigation />
         </div>
         <Switch>
           <Route path="/" exact component={Home} />

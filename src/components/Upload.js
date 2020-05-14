@@ -15,7 +15,10 @@ render(){
     return (
         <div className="main">
             <div className="upload">
-                <button onClick={this.uploadWidget.bind(this)} className="upload-button">
+                <button 
+                onClick={this.uploadWidget.bind(this)} 
+                className="upload-button"
+                >
                     Add Image
                 </button>
             </div>

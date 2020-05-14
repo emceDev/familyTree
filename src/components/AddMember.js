@@ -28,9 +28,19 @@ class AddMember extends React.Component {
       return (
       <div>
           <p>Add first member:</p>
-          <Upload memKey={this.state.memKey} famKey={this.props.famKey}/>
-          <input placeholder="name" onChange={(e)=>{this.handleChange(e)}}></input>
-          <button onClick={()=>{this.PostMember()}}>PostMember</button>
+          <Upload 
+          memKey={this.state.memKey} 
+          famKey={this.props.famKey}
+          />
+          <input 
+          placeholder="name" 
+          onChange={e => {this.handleChange(e)}}
+          >
+          </input>
+          <button 
+          onClick={() => {this.PostMember()}}
+          >PostMember
+          </button>
       </div>)
     }
 }

@@ -1,7 +1,7 @@
-import firebase from 'firebase'
-import {firebaseConfig} from '../db/Config'
-import React from 'react'
-const app = firebase.initializeApp(firebaseConfig)
+// import firebase from 'firebase'
+// import {firebaseConfig} from '../db/Config'
+// import React from 'react'
+// const app = firebase.initializeApp(firebaseConfig)
 
 export const getNewKey = (object) => {
     return app.database().ref().child(object).push().key
