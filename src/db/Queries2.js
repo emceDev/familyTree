@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import React from 'react'
 import {app} from './Config'
-
+import {getFromLocalStorage, addToLocalStorage,logOut} from '../localStorage/user'
 
 // Adding Relative
 export const getKey = (type) => app.database().ref(type).push().key
@@ -55,15 +55,45 @@ export const addMemberToDb = (relKey,memKey,type,) => {
 export const listenMemberData = memKey => {
     return app.database().ref('/members/' + memKey)
 }
-// adding user
+// adding user and deciding if he exists then login him
 export const addUserToDb = (uid,displayName,photoURL,email) => {
+
   const userData = {
     uid:uid,
     name:displayName,
     photo:photoURL,
     email:email,
     isLoggedIn:true,
+    famKey:null
   }
-  app.database().ref('Users/' + uid + '/').update(userData)
+  
+  const userLocationInDb = app.database().ref('users/' + uid + '/')
+  const user = app.database().ref(('users/' + uid))
 
+  user.once('value', snap => {
+    if( snap.val() === null ){
+      userData.famKey = app.database().ref('users/').push().key
+      userLocationInDb.update(userData)
+      addToLocalStorage(userData)
+    }
+    else{
+      const getFamKey = app.database().ref('users/' + uid + '/famKey')
+      getFamKey.once('value',snap=>{
+        userData.famKey=snap.val()
+        addToLocalStorage(userData)
+      })
+      app.database().ref('users/' + uid + '/').update({isLoggedIn:true})
+    }
+})
+}
+
+export const setLogOut = () =>{
+    const uid = JSON.parse(window.localStorage.getItem('user')).uid
+    app.database().ref('users/' + uid + '/').update({isLoggedIn:false})
+    logOut()
+    console.log("loggedOut")
+}
+
+export const listenUserData = uid => {
+  return app.database().ref('users/' + uid)
 }

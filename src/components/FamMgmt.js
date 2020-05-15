@@ -1,57 +1,52 @@
 import React from 'react'
 import FamList from './FamList'
 import {app} from '../db/Config'
+import {getFromLocalStorage} from '../localStorage/user'
+import Navigation from './Navigation'
 
-function FamilyAddForm(props){
-    return(
-    <div>
-        <h1>
-            FamilyAddForm
-        </h1>
-        <input 
-        placeholder="insert Yours family name" 
-        onChange={e => {props.handlechange(e)}}
-        >
-        </input>
-        <button 
-        onClick={() => {props.AddFamilyToDb()}}
-        >
-            Submit
-        </button>
-    </div>)
-}
 class FamMgmt extends React.Component {
     state={
-        famKey:'-M6FeaBBtdzphqBLd6Km',
+        famKey:null,
         famName:null,
+        formDisplay:true
     }
     componentDidMount(){
-        //check if famKey isset for user
+        const famKey = getFromLocalStorage().famKey
+        this.setState({famKey:famKey})
     }
     AddFamilyToDb(){
-        const famKey = app.database().ref().child('/families/').push().key
-        this.setState({famKey:famKey})
+        const famKey = this.state.famKey
         app.database().ref('/families/' + famKey).update(this.state)
     }
     handleChange(e){
         this.setState({famName:e.target.value})
     }
+    handleSubmit(event){
+        event.preventDefault()
+        this.setState({formDisplay:false})
+        console.log("handle submit")
+    }
     render() {
       return (
       <div>
-          <h1>here you can manage your family</h1>
-          
-          {/* zmienic na przyszlosc wykrzyknik na = */}
-        {this.state.famKey === null 
-            ?
-           <FamilyAddForm 
-           handlechange={this.handleChange.bind(this)} 
-           AddFamilyToDb={this.AddFamilyToDb.bind(this)}
-           /> :
-           <FamList 
-           famKey={this.state.famKey} 
-           famName={this.state.famName}
-           />
+        <Navigation/>
+          <h1>here you can edit your family here</h1>
+          {this.state.formDisplay===true
+          ? <form onSubmit={e=>this.handleSubmit(e)}>
+
+              <input 
+              placeholder="enterfamilyName"
+              onChange={e=>{this.handleChange(e)}}>
+              </input>
+
+              <button type="submit">Submit Name</button>
+            </form>
+
+          :<FamList 
+            famKey={this.state.famKey} 
+            famName={this.state.famName}
+            />
+          }
         }
       </div>)
     }

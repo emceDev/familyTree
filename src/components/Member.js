@@ -112,7 +112,7 @@ class Member extends React.Component {
             <Card>
             <Image 
             cloudName="m4t1ce" 
-            publicId={this.props.famKey+"/"+"-M6_JNuuyDv40cjhXvRC"}
+            publicId={ this.props.famKey + "/" + this.state.memKey }
             >
             </Image>
 

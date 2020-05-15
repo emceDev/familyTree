@@ -2,6 +2,9 @@ import React from 'react'
 import {Link, Router} from 'react-router-dom'
 import FamMgmt from '../components/FamMgmt'
 class UserLogged extends React.Component {
+  componentDidMount(){
+
+  }
     render() {
       return (
       <div>
