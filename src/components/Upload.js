@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-
+import { Button } from '@material-ui/core'
 class Upload extends Component {
 uploadWidget() {
     window.cloudinary.openUploadWidget({ 
@@ -15,12 +15,13 @@ render(){
     return (
         <div className="main">
             <div className="upload">
-                <button 
+                <Button 
+                variant="outlined"
                 onClick={this.uploadWidget.bind(this)} 
                 className="upload-button"
                 >
                     Add Image
-                </button>
+                </Button>
             </div>
         </div>
 

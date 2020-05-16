@@ -1,15 +1,17 @@
 import React from 'react'
-import {Link, Router} from 'react-router-dom'
+import {Link, Route,Switch} from 'react-router-dom'
 import FamMgmt from '../components/FamMgmt'
+import ProtectedRoute from '../components/ProtectedRoute'
+import Navigation from '../components/Navigation'
+import {getFromLocalStorage} from '../localStorage/user'
 class UserLogged extends React.Component {
-  componentDidMount(){
-
-  }
     render() {
       return (
       <div>
-          <h1>Hello you are logged IN :)</h1>
-            <Link to="/FamMgmt" id="FamMgmt">Click to add family</Link>
+          <div>
+            <Navigation UserLogged={true}/>
+          </div>
+          <h1>Hello {getFromLocalStorage().name}</h1>
       </div>)
     }
 }

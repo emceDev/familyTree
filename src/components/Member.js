@@ -4,7 +4,7 @@ import {listenMemberData} from '../db/Queries2'
 import Card from 'react-bootstrap/Card'
 import {Image} from 'cloudinary-react';
 import Partner from './Partner'
-
+import { Button } from '@material-ui/core'
 function GetChildren(children,famKey){
     return(
         !!children ?
@@ -61,9 +61,6 @@ class Member extends React.Component {
     showDescription(e){
         console.log(e.target.style.color)
     }
-    getChildren() {
-
-    }
     AddRelativeButtons() {
         return(
             <div 
@@ -71,13 +68,13 @@ class Member extends React.Component {
             onMouseEnter={() => this.Focus(true)}
             onMouseLeave={() => this.Focus(false)}
             >
-                <button 
+                <Button variant="outlined"
                 onClick={() => this.addRelative("/children/")}>AddChild
-                </button>
+                </Button>
 
-                <button 
+                <Button variant="outlined"
                 onClick={() => this.addRelative("/partner/")}>AddPartner
-                </button>
+                </Button>
             </div>
     )
         
@@ -110,6 +107,7 @@ class Member extends React.Component {
             >
 
             <Card>
+            {/* set default image */}
             <Image 
             cloudName="m4t1ce" 
             publicId={ this.props.famKey + "/" + this.state.memKey }

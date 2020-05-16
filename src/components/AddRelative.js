@@ -1,6 +1,7 @@
 import React from 'react'
 import {getKey,familyMemberKeys,addToMembers,addMemberToDb} from '../db/Queries2'
 import Upload from './Upload'
+import { Button,Input } from '@material-ui/core'
 class AddRelative extends React.Component {
     state={
         memKey:"",
@@ -48,16 +49,16 @@ class AddRelative extends React.Component {
           famKey={this.props.famKey}
           />
 
-          <input 
+          <Input 
           placeholder="name" 
           onChange={e => this.setState({name:e.target.value})}>
-          </input>
+          </Input>
 
-          <button 
+          <Button variant="outlined"
           onClick={()=>{this.PostMember()}}
           >
             PostMember
-          </button>
+          </Button>
       </div>)
     }
 }

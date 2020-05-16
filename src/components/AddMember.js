@@ -1,6 +1,7 @@
 import React from 'react'
 import {app} from '../db/Config'
 import Upload from './Upload'
+import { Button,Input } from '@material-ui/core'
 class AddMember extends React.Component {
     state={
         memKey:[],
@@ -32,15 +33,15 @@ class AddMember extends React.Component {
           memKey={this.state.memKey} 
           famKey={this.props.famKey}
           />
-          <input 
-          placeholder="name" 
+          <Input 
+          placeholder="FirstMemberName" 
           onChange={e => {this.handleChange(e)}}
           >
-          </input>
-          <button 
+          </Input>
+          <Button variant="outlined"
           onClick={() => {this.PostMember()}}
           >PostMember
-          </button>
+          </Button>
       </div>)
     }
 }

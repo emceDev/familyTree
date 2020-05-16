@@ -31,7 +31,7 @@ class Partner extends React.Component{
         return(
             <Card>
                 <Image cloudName="m4t1ce" 
-                publicId={this.props.famKey+"/"+"-M6_JNuuyDv40cjhXvRC"} >
+                publicId={this.props.famKey+"/"+this.state.memKey} >
                 </Image>
                 <Card.Body>
                     <Card.Title>{this.state.name}</Card.Title>
