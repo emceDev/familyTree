@@ -1,15 +1,19 @@
 import React from 'react'
-import AddRelative from './AddRelative'
 import {listenMemberData} from '../db/Queries2'
 import Card from 'react-bootstrap/Card'
-import {Image} from 'cloudinary-react';
 import Partner from './Partner'
 import { Button } from '@material-ui/core'
+import { MemberShortDescription } from './MemberShortDescription'
+import MemEdit from './MemEdit'
+import { Avatar } from './Avatar'
+import AddRelative from './AddRelative'
+
+
 function GetChildren(children,famKey){
     return(
         !!children ?
         children.map(x =>{
-            return <Member key={x} memKey={x} famKey={famKey} />
+            return <Member key={x} memKey={x} famKey={famKey}/>
             })
             :null
     )
@@ -21,21 +25,33 @@ class Member extends React.Component {
             memKey:"",
             famKey:[],
             name:"",
+            description:'',
+            residence:'',
             children:[],
             siblings:[],
             partner:'',
-            buttonDisplay:false,
+            memEdit:false,
+            addRelButtons:false,
             addRelativeType:null,
             type:null
         }
         this.addRelative = this.addRelative.bind(this)
-    }
-    Focus(x){
-            this.setState({buttonDisplay:x})
+        this.memEdit = this.memEdit.bind(this)
     }
     addRelative(type){
         this.setState({addRelativeType:type})
     }
+    memEdit(x){
+        this.setState({memEdit:x})
+    }
+    addRelButtons(x){
+        x===true
+        ?this.setState({addRelButtons:x})
+        :setTimeout(() => {
+            this.setState({addRelButtons:x})
+        }, 1000);
+    }
+
     //state settings:
     componentDidMount(){
         const memData = listenMemberData(this.props.memKey)
@@ -47,6 +63,8 @@ class Member extends React.Component {
                     this.setState({
                         memKey:this.props.memKey,
                         name:data.name,
+                        description:data.description,
+                        residence:data.residence,
                         partner:data.partner,
                         children:data.children,
                         siblings:data.siblings,
@@ -55,24 +73,18 @@ class Member extends React.Component {
                 })  
         }, 50);
     }
-    styleFocused ={
-        backgroundColor:"blue"
-    }
-    showDescription(e){
-        console.log(e.target.style.color)
-    }
+    // Buttons for adding relatives
     AddRelativeButtons() {
         return(
-            <div 
-            className="addRelativeButtons" 
-            onMouseEnter={() => this.Focus(true)}
-            onMouseLeave={() => this.Focus(false)}
+            <div className="addRelativeButtons" 
+            onMouseEnter={() => this.addRelButtons(true)}
+            onMouseLeave={() => this.addRelButtons(false)}
             >
-                <Button variant="outlined"
+                <Button size="small" variant="outlined"
                 onClick={() => this.addRelative("/children/")}>AddChild
                 </Button>
 
-                <Button variant="outlined"
+                <Button size="small" variant="outlined"
                 onClick={() => this.addRelative("/partner/")}>AddPartner
                 </Button>
             </div>
@@ -82,13 +94,11 @@ class Member extends React.Component {
     render() {
       return (
         <div className="MemberComponent">
-        <div className="Partners"  
-        onMouseEnter={() => this.Focus(true)} 
-        onMouseLeave={() => this.Focus(false)}
-        >{console.log(this.props)}
-            <div className="Partner" 
-            onClick={e => {this.showDescription(e)}}
-            >
+        <div className="Partners"
+        onMouseEnter={()=>{this.addRelButtons(true)}}
+        onMouseLeave={()=>{this.addRelButtons(false)}}
+        >
+            <div className="Partner">
                 {
                 !!this.state.partner && this.state.type !== "/partner/"
                     ?
@@ -101,41 +111,57 @@ class Member extends React.Component {
                 }
             </div>
 
-            <div 
-            className="MemberData" 
-            onClick={e => this.showDescription(e)}
-            >
+            <div className="MemberData">
 
-            <Card>
-            {/* set default image */}
-            <Image 
-            cloudName="m4t1ce" 
-            publicId={ this.props.famKey + "/" + this.state.memKey }
-            >
-            </Image>
+                <Card onClick={()=>this.memEdit(true)}>
+                {/* set default image */}
 
-            <Card.Body>
-                <Card.Title>{this.state.name}</Card.Title>
-            </Card.Body>
+                <div className="imageContainer">
 
-            </Card>
+                    <Avatar url={this.props.famKey+this.state.memKey}/>
+
+                    <div className="overlay">
+
+                        <MemberShortDescription 
+                        name={this.state.name} 
+                        description={this.state.description}
+                        residence={this.state.residence}/>
+
+                    </div>
+
+                </div>
+                <Card.Body>
+                    <Card.Title>{this.state.name}</Card.Title>
+                </Card.Body>
+
+                </Card>
         </div>
         </div>
-            {
-            this.state.buttonDisplay === true 
-                ? 
-                this.AddRelativeButtons()
-                :null
+        {
+                this.state.addRelButtons === true 
+                    ? 
+                    this.AddRelativeButtons()
+                    :null
+                }
+        {
+                this.state.memEdit === true
+                ?<MemEdit 
+                memKey={this.state.memKey} 
+                famKey={this.props.famKey}
+                memEditDisplay={this.memEdit}/>
+                :<p>{this.state.memEdit}</p>
             }
+
             {
             this.state.addRelativeType !== null 
-                ?
-                <AddRelative 
-                type={this.state.addRelativeType} 
-                famKey={this.props.famKey} 
-                relKey={this.state.memKey}
-                memList={this.props.memList}
-                notify={this.addRelative}
+                ?<AddRelative 
+                    onMouseEnter={() => this.addRelButtons(true)} 
+                    onMouseLeave={() => this.addRelButtons(false)}
+                    type={this.state.addRelativeType} 
+                    famKey={this.props.famKey} 
+                    relKey={this.state.memKey}
+                    memList={this.props.memList}
+                    notify={this.addRelative}
                 />
                 :null
             }

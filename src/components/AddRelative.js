@@ -2,11 +2,14 @@ import React from 'react'
 import {getKey,familyMemberKeys,addToMembers,addMemberToDb} from '../db/Queries2'
 import Upload from './Upload'
 import { Button,Input } from '@material-ui/core'
+
 class AddRelative extends React.Component {
     state={
         memKey:"",
         famKey:[],
-        name:"",
+        name:"name",
+        description:"description",
+        residence:"residence",
         children:[],
         siblings:[],
         parent:[],
@@ -43,7 +46,8 @@ class AddRelative extends React.Component {
     }
     render() {
       return (
-      <div>
+      <div className="addRelativeFormOverlay">
+      <div className="addRelativeForm">
           <Upload 
           memKey={this.state.memKey} 
           famKey={this.props.famKey}
@@ -59,6 +63,7 @@ class AddRelative extends React.Component {
           >
             PostMember
           </Button>
+      </div>
       </div>)
     }
 }

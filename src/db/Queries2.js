@@ -53,7 +53,7 @@ export const addMemberToDb = (relKey,memKey,type,) => {
 }
 // MemberComponent
 export const listenMemberData = memKey => {
-    return app.database().ref('/members/' + memKey)
+  return app.database().ref('/members/' + memKey)
 }
 // adding user and deciding if he exists then login him
 export const addUserToDb = (uid,displayName,photoURL,email) => {
@@ -96,4 +96,30 @@ export const setLogOut = () =>{
 
 export const listenUserData = uid => {
   return app.database().ref('users/' + uid)
+}
+// editingMember
+export const editMember = data => {
+  const memData = listenMemberData(data.memKey)
+  memData.update({
+    name:data.name,
+    description:data.description,
+    residence:data.residence
+  })
+}
+export const deleteMember = memKey => {
+    var parentKey = null
+    const getParentKey = app.database().ref('/members/'+memKey+"/parent/")
+    getParentKey.once('value', snap =>{
+      if(snap.val!==null){
+        console.log("snapik"+snap.val())
+        parentKey=snap.val()
+      }})
+      app.database().ref("/members/"+parentKey+"/children/").equalTo(memKey).remove()
+      // console.log(x)
+    // app.database().ref("/members/"+parentKey+"/children/").once('value',snap=>{
+    //   console.log("childrennki"+snap.val)
+    // })
+    // app.database().ref('/members/'+parentKey+"/children/"+memKey).remove()
+    // listenMemberData(memKey).remove()
+    // app.database().ref('/families/memKeys/'+memKey).remove()
 }

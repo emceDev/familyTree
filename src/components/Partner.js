@@ -1,14 +1,24 @@
 import React from 'react'
-import AddRelative from './AddRelative'
 import {app} from '../db/Config'
 import Card from 'react-bootstrap/Card'
-import {Image} from 'cloudinary-react';
-
+import {MemberShortDescription} from './MemberShortDescription'
+import {Avatar} from './Avatar'
+import MemEdit from './MemEdit'
 class Partner extends React.Component{
-        state={
+    constructor(){
+        super()
+        this.state={
             memKey:null,
-            name:null,
+            name:"name",
+            description:"description",
+            residence:"residence",
             partner:null,
+            memEdit:false,
+        }
+        this.memEdit = this.memEdit.bind(this)
+    }
+        memEdit(x){
+            this.setState({memEdit:x})
         }
         componentDidMount(){
             const memData = app.database().ref('/members/' + this.props.memKey)
@@ -19,6 +29,8 @@ class Partner extends React.Component{
                         this.setState({
                             memKey:this.props.memKey,
                             name:data.name,
+                            description:data.description,
+                            residence:data.residence,
                             partner:data.partner,
                             children:data.children,
                             siblings:data.siblings,
@@ -29,14 +41,38 @@ class Partner extends React.Component{
         }
     render(){
         return(
-            <Card>
-                <Image cloudName="m4t1ce" 
-                publicId={this.props.famKey+"/"+this.state.memKey} >
-                </Image>
+            <div>
+            <Card
+            onClick={()=>this.memEdit(true)}
+            >
+
+                <div className="imageContainer">
+
+                    <Avatar url={this.props.famKey + this.state.memKey}/>
+
+                    <div className="overlay">
+
+                        <MemberShortDescription 
+                        name={this.state.name} 
+                        description={this.state.description}
+                        residence={this.state.residence}/>
+
+                    </div>
+
+                </div>
                 <Card.Body>
-                    <Card.Title>{this.state.name}</Card.Title>
+                    <Card.Title>{this.state.description}</Card.Title>
                 </Card.Body>
             </Card>
+            {
+                this.state.memEdit === true
+                ?<MemEdit 
+                memKey={this.state.memKey} 
+                famKey={this.props.famKey}
+                memEditDisplay={this.memEdit}/>
+                :<p>{this.state.memEdit}</p>
+            }
+            </div>
         )
     }
 }

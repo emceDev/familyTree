@@ -6,7 +6,10 @@ class AddMember extends React.Component {
     state={
         memKey:[],
         famKey:[],
-        name:"",
+        name:"name",
+        description:"description",
+        residence:"residence",
+        famName:"family name",
         parent:null,
         partner:null,
         children:null,
