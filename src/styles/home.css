@@ -29,10 +29,6 @@
     justify-content: center;
     margin-left: 1vw;
 }
-.addRelativeButtons{
-    animation: appear 1s;
-    z-index: 4;
-}
 button{
     background-color: brown;
 }
@@ -43,10 +39,11 @@ button{
 .MemEdit{
     /* position: absolute; */
     background-color: rgba(63, 81, 181, 0.959);
+    color:black;
     width: 50vw;
-    min-height: 60vh;
-    margin-top: 5vh;
-    margin-left: 10vw;
+    height: 50vh;
+    margin-top: 25vh;
+    margin-left: 25vw;
     z-index: 112;
     display: flex;
     flex-direction: column;
@@ -55,11 +52,18 @@ button{
 .MemEditOverlay{
     z-index: 110;
     position: fixed;
-    top: 15vh;
-    left: 15vw;
-    width: 70vw;
-    height: 70vh;
+    left: 0;
+    top:0;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(63, 81, 181, 0.774)
+}
+::placeholder{
+    color:black;
+    text-align: center;
+}
+.MemEditOverlay button{
+    background-color: rgb(63, 81, 181);
 }
 
 .imageContainer{
@@ -83,8 +87,9 @@ button{
     width: 100%;
     left: 0;
   }
-  .addRelativeForm{
-    background-color: brown;
+
+.addRelativeForm{
+    background-color: rgb(63, 81, 181);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -92,10 +97,10 @@ button{
     width: 20vw;
     margin-left: 40vw;
     margin-top:30vh;
-
+    z-index: 2;
   }
-  .addRelativeFormOverlay{
-    background-color: rgba(199, 20, 20, 0.87);
+.addRelativeFormOverlay{
+    background-color: rgba(63, 81, 181, 0.74);
     position: fixed;
     left: 0;
     top:0;
@@ -103,3 +108,10 @@ button{
     width: 100vw;
     height: 100vh;
   }
+.addRelativeButtons{
+    animation: appear 1s;
+    z-index: 4;
+}
+.addRelativeForm ::placeholder{
+    color:black;
+}

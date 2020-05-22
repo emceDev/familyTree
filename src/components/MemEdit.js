@@ -20,6 +20,7 @@ class MemEdit extends React.Component{
                 ?
                 this.setState({
                     memKey:this.props.memKey,
+                    famKey:this.props.famKey,
                     name:data.name,
                     description:data.description,
                     residence:data.residence,
@@ -39,18 +40,16 @@ class MemEdit extends React.Component{
         editMember(this.state)
     }
     delete(){
-        deleteMember(this.state.memKey)
+        deleteMember(this.state.memKey,this.state.famKey)
     }
     render(){
         return(
-            <div className="MemEditOverlay" >
-                <Button variant="outlined "
-                onClick={()=>this.props.memEditDisplay(false)}>
-                close
-                </Button>
+            <div className="MemEditOverlay" 
+            onClick={()=>this.props.memEditDisplay(false)}>
                 <div 
                 className="MemEdit" 
-                onChange={(e)=>{this.handleChange(e)}}>
+                onChange={(e)=>{this.handleChange(e)}}
+                onClick={(e)=>{e.stopPropagation()}}>
                     <p>{this.state.famName}</p>
                     <Input 
                     variant="outlined" 
@@ -79,6 +78,7 @@ class MemEdit extends React.Component{
                     size="small"
                     onClick={()=>{this.delete();
                     this.props.memEditDisplay(false)}}
+                    style={{backgroundColor:"red"}}
                     >Delete member
                     </Button>
                 </div>

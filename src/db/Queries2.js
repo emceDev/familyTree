@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import React from 'react'
+import React, { Children } from 'react'
 import {app} from './Config'
 import {getFromLocalStorage, addToLocalStorage,logOut} from '../localStorage/user'
 
@@ -91,7 +91,6 @@ export const setLogOut = () =>{
     const uid = JSON.parse(window.localStorage.getItem('user')).uid
     app.database().ref('users/' + uid + '/').update({isLoggedIn:false})
     logOut()
-    console.log("loggedOut")
 }
 
 export const listenUserData = uid => {
@@ -106,20 +105,65 @@ export const editMember = data => {
     residence:data.residence
   })
 }
-export const deleteMember = memKey => {
+export const deleteMember = (memKey,famKey) => {
+
     var parentKey = null
     const getParentKey = app.database().ref('/members/'+memKey+"/parent/")
     getParentKey.once('value', snap =>{
       if(snap.val!==null){
-        console.log("snapik"+snap.val())
         parentKey=snap.val()
       }})
-      app.database().ref("/members/"+parentKey+"/children/").equalTo(memKey).remove()
-      // console.log(x)
-    // app.database().ref("/members/"+parentKey+"/children/").once('value',snap=>{
-    //   console.log("childrennki"+snap.val)
-    // })
-    // app.database().ref('/members/'+parentKey+"/children/"+memKey).remove()
-    // listenMemberData(memKey).remove()
-    // app.database().ref('/families/memKeys/'+memKey).remove()
+
+    //operation on parent object in database
+    const childrenInDb = app.database().ref("/members/" + parentKey + "/children/")
+    const children = []
+
+    childrenInDb.once('value', snap => 
+    {  
+      if(snap.val()!==null){
+        snap.val().map(key => {
+          if(key !== memKey){
+            children.push(key)
+          }
+          else{
+            return null
+          }
+        })
+        childrenInDb.set(children)
+      }
+    })
+
+    // operation on family/memKeys/
+    const childInFamkeys = app.database().ref("/families/" + famKey + "/memKeys/")
+    const childInFamKeysArray = []
+    childInFamkeys.once('value', snap => 
+    {  
+      if(snap.val() !== null){
+        snap.val().map(key => {
+          if(key !== memKey){
+            childInFamKeysArray.push(key)
+          }
+          else{
+            return null
+          }
+        })
+        childInFamkeys.set(childInFamKeysArray)
+      }
+    })
+
+    // delete in partner
+    var partnerKey = null
+    const getPartnerKey = app.database().ref('/members/' + memKey + "/partner/")
+
+    getPartnerKey.once('value', snap =>{
+      if( snap.val !== null ){
+        partnerKey=snap.val()
+      }})
+    
+    const partnerInDb = app.database().ref("/members/" + partnerKey + "/partner/")
+    partnerInDb.set([])
+
+    // delete member in members
+    listenMemberData(memKey).remove()
+
 }

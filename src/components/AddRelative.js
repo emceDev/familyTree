@@ -46,8 +46,11 @@ class AddRelative extends React.Component {
     }
     render() {
       return (
-      <div className="addRelativeFormOverlay">
-      <div className="addRelativeForm">
+      <div className="addRelativeFormOverlay"
+      onClick={()=>{this.props.notify(null)}}>
+      <div className="addRelativeForm"
+      onClick={(e)=>e.stopPropagation()}
+      >
           <Upload 
           memKey={this.state.memKey} 
           famKey={this.props.famKey}

@@ -40,10 +40,13 @@ class FamList extends React.Component {
         {
         this.state.membersList === null 
             ?
-            <AddMember 
-            famKey={this.props.famKey}
-            />
-            :
+            setTimeout(() => {
+                    return(
+                        <AddMember 
+                        famKey={this.props.famKey}
+                        />
+                    )
+                }, 1000):
             <Member 
             key={this.state.membersList[this.state.membersList.length-1]} 
             memKey={this.state.membersList[this.state.membersList.length-1]} 
