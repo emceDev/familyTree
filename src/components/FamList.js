@@ -12,13 +12,13 @@ class FamList extends React.Component {
     }
     //members array settings
     checkIfEmpty(){
-        const members = app.database().ref('/families/' +this.props.famKey +'/memKeys/')
+        const members = app.database().ref('/families/' + this.props.famKey +'/memKeys/')
 
         members.on('value',snap => {
             var membersArray=[]
 
             if (snap.val() === null){
-                console.log("Fam list empty" + snap.val())
+                this.setState({membersList:null})
             }else{
                 snap.val().map(member => {
                     membersArray.push(member)
@@ -39,15 +39,10 @@ class FamList extends React.Component {
           </h1>
         {
         this.state.membersList === null 
-            ?
-            setTimeout(() => {
-                    return(
-                        <AddMember 
-                        famKey={this.props.famKey}
-                        />
-                    )
-                }, 1000):
-            <Member 
+            ? <AddMember 
+            famKey={this.props.famKey}
+            />
+            :<Member 
             key={this.state.membersList[this.state.membersList.length-1]} 
             memKey={this.state.membersList[this.state.membersList.length-1]} 
             famKey={this.props.famKey}

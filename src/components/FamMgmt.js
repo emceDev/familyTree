@@ -24,22 +24,21 @@ class FamMgmt extends React.Component {
       return (
       <div>
         <Navigation/>
-          <h1>You can manage your family here</h1>
-          {!this.state.famKey
-          ? <form onSubmit={e=>this.handleSubmit(e)} >
+          <h1>You can edit yours family tree</h1>
+          {!!this.state.famKey
+          ?<FamList 
+          famKey={this.state.famKey} 
+          famName={this.state.famName}
+          /> 
+          :<form onSubmit={e=>this.handleSubmit(e)} >
 
-              <input 
-              placeholder="enterfamilyName"
-              onChange={e=>{this.handleChange(e)}}>
-              </input>
+          <input 
+          placeholder="enterfamilyName"
+          onChange={e=>{this.handleChange(e)}}>
+          </input>
 
-              <button type="submit">Submit Name</button>
-            </form>
-
-          :<FamList 
-            famKey={this.state.famKey} 
-            famName={this.state.famName}
-            />
+          <button type="submit">Create Family</button>
+        </form>
           }
         
       </div>)

@@ -3,6 +3,9 @@ import React, { Children } from 'react'
 import {app} from './Config'
 import {getFromLocalStorage, addToLocalStorage,logOut} from '../localStorage/user'
 
+
+// Creating family
+
 // Adding Relative
 export const getKey = (type) => app.database().ref(type).push().key
 
@@ -55,6 +58,9 @@ export const addMemberToDb = (relKey,memKey,type,) => {
 export const listenMemberData = memKey => {
   return app.database().ref('/members/' + memKey)
 }
+export const createFamily = (uid,famKey) =>{
+  // app.database().ref('/families/').push(famKey)
+}
 // adding user and deciding if he exists then login him
 export const addUserToDb = (uid,displayName,photoURL,email) => {
 
@@ -66,7 +72,6 @@ export const addUserToDb = (uid,displayName,photoURL,email) => {
     isLoggedIn:true,
     famKey:null
   }
-  
   const userLocationInDb = app.database().ref('users/' + uid + '/')
   const user = app.database().ref(('users/' + uid))
 
@@ -162,6 +167,22 @@ export const deleteMember = (memKey,famKey) => {
     
     const partnerInDb = app.database().ref("/members/" + partnerKey + "/partner/")
     partnerInDb.set([])
+
+    // delete its children
+    const memberChildren = app.database().ref("/members/" + memKey + "/children/")
+    memberChildren.once('value', snap => 
+    {  
+      if(snap.val() !== null){
+        snap.val().map(key => {
+          if(key !== memKey){
+            app.database().ref('/members/').child(key).remove()
+          }
+          else{
+            return null
+          }
+        })
+      }
+    })
 
     // delete member in members
     listenMemberData(memKey).remove()
