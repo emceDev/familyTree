@@ -1,14 +1,4 @@
-.App {
-  text-align: center;
-  color:rgb(35, 44, 97);
-}
-a{
-  text-decoration: none;
-}
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -16,16 +6,7 @@ a{
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+
 
 .App-link {
   color: #61dafb;
@@ -38,8 +19,5 @@ a{
   to {
     transform: rotate(360deg);
   }
-}
-.memberChildren{
-  /* margin-left: 1vw; */
 }
 

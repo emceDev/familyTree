@@ -2,12 +2,16 @@ import React from 'react'
 import Member from './Member'
 import AddMember from './AddMember'
 import {app} from '../db/Config'
+import { Parallax, Background } from 'react-parallax';
 class FamList extends React.Component {
     state={
-        membersList:null
+        membersList:null,
+        vw:'',
+        vh:''
     }
     componentDidMount(){
         this.checkIfEmpty()
+        this.setState({vw:window.innerWidth,vh:window.innerHeight})
         //get family members
     }
     //members array settings
@@ -28,12 +32,18 @@ class FamList extends React.Component {
         }
             )}
             
-    
+
     render() {
       return (
       <div 
-      style={{display:"flex",flexDirection:'column'}}
+      className="FamList"
       >
+        <Parallax
+            blur={{ min: -15, max: 20 }}
+            bgImage={require('../images/bark.jpg')}
+            bgImageAlt="the cat"
+            strength={4500}
+        >
           <h1>
             FamilyList
           </h1>
@@ -48,6 +58,7 @@ class FamList extends React.Component {
             famKey={this.props.famKey}
             />
         }
+        </Parallax>
       </div>)
     }
 }

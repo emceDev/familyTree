@@ -131,12 +131,14 @@ class Member extends React.Component {
 
                 </div>
                 <Card.Body>
-                    <Card.Title>{this.state.name}</Card.Title>
+                    <Card.Title style={{backgroundColor:'rgba(17, 92, 17, 0.76)'}}>{this.state.name}</Card.Title>
                 </Card.Body>
 
                 </Card>
         </div>
+        
         </div>
+
         {
                 this.state.addRelButtons === true 
                     ? 
