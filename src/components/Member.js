@@ -31,8 +31,9 @@ class Member extends React.Component {
             siblings:[],
             partner:'',
             memEdit:false,
-            addRelButtons:false,
+            addRelButtons:true,
             addRelativeType:null,
+            showOptions:false,
             type:null
         }
         this.addRelative = this.addRelative.bind(this)
@@ -51,7 +52,10 @@ class Member extends React.Component {
             this.setState({addRelButtons:x})
         }, 1000);
     }
+    showOptions(){
+        this.setState({showOptions:!this.state.showOptions})
 
+    }
     //state settings:
     componentDidMount(){
         const memData = listenMemberData(this.props.memKey)
@@ -74,18 +78,19 @@ class Member extends React.Component {
         }, 50);
     }
     // Buttons for adding relatives
-    AddRelativeButtons() {
+    Options() {
         return(
-            <div className="addRelativeButtons" 
-            onMouseEnter={() => this.addRelButtons(true)}
-            onMouseLeave={() => this.addRelButtons(false)}
-            >
+            <div className="Options">
                 <Button size="small" variant="outlined"
                 onClick={() => this.addRelative("/children/")}>AddChild
                 </Button>
 
                 <Button size="small" variant="outlined"
                 onClick={() => this.addRelative("/partner/")}>AddPartner
+                </Button>
+
+                <Button size="small" variant="outlined"
+                onClick={() => this.memEdit(true)}>EditMember
                 </Button>
             </div>
     )
@@ -113,7 +118,7 @@ class Member extends React.Component {
 
             <div className="MemberData">
 
-                <Card onClick={()=>this.memEdit(true)}>
+                <Card onClick={()=>this.showOptions()}>
                 {/* set default image */}
 
                 <div className="imageContainer">
@@ -131,30 +136,11 @@ class Member extends React.Component {
 
                 </div>
                 <Card.Body>
-                    <Card.Title style={{backgroundColor:'rgba(17, 92, 17, 0.76)'}}>{this.state.name}</Card.Title>
+                    <Card.Title>{this.state.name}</Card.Title>
                 </Card.Body>
 
                 </Card>
-        </div>
-        
-        </div>
-
         {
-                this.state.addRelButtons === true 
-                    ? 
-                    this.AddRelativeButtons()
-                    :null
-                }
-        {
-                this.state.memEdit === true
-                ?<MemEdit 
-                memKey={this.state.memKey} 
-                famKey={this.props.famKey}
-                memEditDisplay={this.memEdit}/>
-                :<p>{this.state.memEdit}</p>
-            }
-
-            {
             this.state.addRelativeType !== null 
                 ?<AddRelative 
                     onMouseEnter={() => this.addRelButtons(true)} 
@@ -166,7 +152,25 @@ class Member extends React.Component {
                     notify={this.addRelative}
                 />
                 :null
+        }
+        </div>
+        </div>
+
+        {
+                this.state.showOptions === true 
+                    ? 
+                    this.Options()
+                    :null
+                }
+        {
+                this.state.memEdit === true
+                ?<MemEdit 
+                memKey={this.state.memKey} 
+                famKey={this.props.famKey}
+                memEditDisplay={this.memEdit}/>
+                :<p>{this.state.memEdit}</p>
             }
+
         <div className="MemberChildren">
             {GetChildren(this.state.children, this.props.famKey)}
         </div>

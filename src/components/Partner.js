@@ -41,14 +41,14 @@ class Partner extends React.Component{
         }
     render(){
         return(
-            <div>
+            <div >
             <Card
-            onClick={()=>this.memEdit(true)}
-            >
+            onClick={()=>this.showOptions()}>
 
                 <div className="imageContainer">
 
-                    <Avatar url={this.props.famKey + this.state.memKey}/>
+                    <Avatar 
+                    url={this.props.famKey + this.state.memKey}/>
 
                     <div className="overlay">
 
@@ -61,7 +61,7 @@ class Partner extends React.Component{
 
                 </div>
                 <Card.Body>
-                    <Card.Title>{this.state.description}</Card.Title>
+                    <Card.Title>{this.state.name}</Card.Title>
                 </Card.Body>
             </Card>
             {

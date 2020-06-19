@@ -7,7 +7,8 @@ class FamList extends React.Component {
     state={
         membersList:null,
         vw:'',
-        vh:''
+        vh:'',
+        previewMode:true
     }
     componentDidMount(){
         this.checkIfEmpty()
@@ -31,8 +32,11 @@ class FamList extends React.Component {
             }
         }
             )}
-            
-        
+    previewMode(){
+        this.setState({previewMode:!this.state.previewMode})
+        const x = document.getElementsByClassName("FamList")[0].style
+        console.log(x)
+    }
     render() {
       return (
       <div 
@@ -42,11 +46,12 @@ class FamList extends React.Component {
             blur={{ min: -15, max: 20 }}
             bgImage={require('../images/bark.jpg')}
             bgImageAlt="the cat"
-            strength={4500}
+            strength={500}
         >
           <h1>
             FamilyList
           </h1>
+          <button onClick={()=>{this.previewMode()}}>Preview mode</button>
         {
         this.state.membersList === null 
             ? <AddMember 

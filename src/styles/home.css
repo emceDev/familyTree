@@ -20,12 +20,15 @@ a{
     display: flex;
     justify-content: space-evenly;
 }
-
+.card{
+    background-color: rgba(0, 100, 0, 0.644);
+    border-radius: 25% 25% 4% 4%;
+}
 .Partners{
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    margin-left: 1vw;
+    margin: 0vw 1vw 0vw 1vw;
 }
 button{
     background-color: brown;
@@ -67,18 +70,22 @@ button{
 }
 
 .MemberComponent{
-    border-radius: 40px;
+    background-color: rgba(79, 124, 12, 0.068);
 }
+/* card body */ 
 .imageContainer{
     display: flex;
     flex-direction: column;
-    background-color: darkgreen;
     position: relative;
   }
+.imageContainer img{
+    border-radius: 20%;
+}
   .overlay{
+    border-radius: 20%;
     position: absolute;
     bottom: 0;
-    left: 100%;
+    left: 0%;
     right: 0;
     background-color:rgba(17, 92, 17, 0.76);
     overflow: hidden;
@@ -111,9 +118,32 @@ button{
     width: 100vw;
     height: 100vh;
   }
-.addRelativeButtons{
-    animation: appear 1s;
+@keyframes slideDown{
+    0%{
+        height: 0%;
+        opacity: 0;
+        line-height: 1%;
+        
+    }
+    100%{
+        height: auto;
+        opacity: 1;
+        line-height: 100%;
+    }
+}
+.Options{
+    position: relative;
+    margin:auto;
+    width: min-content;
+    overflow: hidden;
+    max-width: fit-content;
+    background-color: rgba(0, 100, 0, 0.644);
     z-index: 4;
+    animation: slideDown 0.7s;
+
+}
+.addRelativeButtons *{
+    height: 0%;
 }
 .addRelativeForm ::placeholder{
     color:black;
@@ -122,10 +152,8 @@ button{
     background-color: rgb(4, 66, 4);
 }
 .FamList{
-    min-width: 100vw;
     width: fit-content;
     color:white;
-
     -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
