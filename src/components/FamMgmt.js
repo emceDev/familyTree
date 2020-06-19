@@ -34,10 +34,54 @@ class FamMgmt extends React.Component {
       }else
       {return}
   }
+    scrollHandle2(e){
+      const mouseX = e.clientX
+      const mouseY = e.clientY
+      const screenX = window.innerWidth
+      const screenY = window.innerHeight
+      const midX = screenX/2
+      const midY = screenY/2
+      console.log(mouseX,"  ",midX,"  ",mouseY,"  ",midY)
+    window.scrollTo({
+      left: mouseX,
+      top: mouseY,
+      behavior:'auto'
+    }
+    )
+      // window.scrollBy({
+      //   top: mouseY-midY,
+      //   left: mouseX-midX,
+      //   behavior: 'smooth'
+      // });
+    }
+    handleScroll3(e) {
+      console.log(
+        window.innerHeight,
+        window.innerWidth,
+        "    ",
+        e.clientY,
+        e.clientX
+      );
+      var y = window.innerHeight / 2 - e.clientY;
+      var x = window.innerWidth / 2 - e.clientX;
+      if (y > 50 || y < 50 || x > 140 || x < 140) {
+        if (y > 50) {
+          window.scrollBy(0, -20);
+        } else if (y < -50) {
+          window.scrollBy(0, 20);
+        }
+        if (x > 140) {
+          window.scrollBy(-20, 0);
+        } else if (x < -140) {
+          window.scrollBy(20, 0);
+        }
+      }
+      console.log("x" + x, "y" + y);
+    }
     render() {
       return (
       <div className="FamMgmt"
-      onMouseMove={(e)=>{this.scrollHandle(e)}}>
+      onMouseMoveCapture={(e)=>{this.handleScroll3(e)}}>
         <Navigation/>
           <h1>You can edit yours family tree</h1>
           <p>choose preview opions</p>
