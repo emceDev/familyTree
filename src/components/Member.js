@@ -7,6 +7,7 @@ import { MemberShortDescription } from './MemberShortDescription'
 import MemEdit from './MemEdit'
 import { Avatar } from './Avatar'
 import AddRelative from './AddRelative'
+import {Options }from './Options'
 
 
 function GetChildren(children,famKey){
@@ -54,7 +55,6 @@ class Member extends React.Component {
     }
     showOptions(){
         this.setState({showOptions:!this.state.showOptions})
-
     }
     //state settings:
     componentDidMount(){
@@ -78,31 +78,28 @@ class Member extends React.Component {
         }, 50);
     }
     // Buttons for adding relatives
-    Options() {
-        return(
-            <div className="Options">
-                <Button size="small" variant="outlined"
-                onClick={() => this.addRelative("/children/")}>AddChild
-                </Button>
+    // Options() {
+    //     return(
+    //         <div className="Options">
+    //             <Button size="small" variant="outlined"
+    //             onClick={() => this.addRelative("/children/")}>AddChild
+    //             </Button>
 
-                <Button size="small" variant="outlined"
-                onClick={() => this.addRelative("/partner/")}>AddPartner
-                </Button>
+    //             <Button size="small" variant="outlined"
+    //             onClick={() => this.addRelative("/partner/")}>AddPartner
+    //             </Button>
 
-                <Button size="small" variant="outlined"
-                onClick={() => this.memEdit(true)}>EditMember
-                </Button>
-            </div>
-    )
+    //             <Button size="small" variant="outlined"
+    //             onClick={() => this.memEdit(true)}>EditMember
+    //             </Button>
+    //         </div>
+    // )
         
-    }
+    // }
     render() {
       return (
         <div className="MemberComponent">
-        <div className="Partners"
-        onMouseEnter={()=>{this.addRelButtons(true)}}
-        onMouseLeave={()=>{this.addRelButtons(false)}}
-        >
+        <div className="Partners">
             <div className="Partner">
                 {
                 !!this.state.partner && this.state.type !== "/partner/"
@@ -111,6 +108,8 @@ class Member extends React.Component {
                     childrenKeys={this.state.children} 
                     memKey={this.state.partner} 
                     famKey={this.props.famKey}
+                    addRelative={this.addRelative}
+                    memEdit={this.memEdit}
                     />
                     :null
                 }
@@ -159,7 +158,7 @@ class Member extends React.Component {
         {
                 this.state.showOptions === true 
                     ? 
-                    this.Options()
+                    <Options addRelative={this.addRelative} memEdit={this.memEdit}/>
                     :null
                 }
         {

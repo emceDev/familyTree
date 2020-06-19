@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card'
 import {MemberShortDescription} from './MemberShortDescription'
 import {Avatar} from './Avatar'
 import MemEdit from './MemEdit'
+import {Options} from './Options'
 class Partner extends React.Component{
     constructor(){
         super()
@@ -14,6 +15,7 @@ class Partner extends React.Component{
             residence:"residence",
             partner:null,
             memEdit:false,
+            showOptions:false
         }
         this.memEdit = this.memEdit.bind(this)
     }
@@ -39,11 +41,14 @@ class Partner extends React.Component{
                     })  
             }, 50);
         }
+        showOptions(){
+            this.setState({showOptions:!this.state.showOptions})
+        }
     render(){
         return(
             <div >
             <Card
-            onClick={()=>this.showOptions()}>
+            onClick={()=>{this.showOptions()}}>
 
                 <div className="imageContainer">
 
@@ -64,6 +69,12 @@ class Partner extends React.Component{
                     <Card.Title>{this.state.name}</Card.Title>
                 </Card.Body>
             </Card>
+            {
+                this.state.showOptions === true 
+                    ? 
+                    <Options addRelative={this.props.addRelative} memEdit={this.memEdit}/>
+                    :null
+                }
             {
                 this.state.memEdit === true
                 ?<MemEdit 
