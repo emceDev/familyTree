@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Suspense} from 'react'
 import {listenMemberData} from '../db/Queries2'
 import Card from 'react-bootstrap/Card'
 import Partner from './Partner'
@@ -10,11 +10,16 @@ import AddRelative from './AddRelative'
 import {Options }from './Options'
 
 
+
 function GetChildren(children,famKey){
     return(
         !!children ?
         children.map(x =>{
-            return <Member key={x} memKey={x} famKey={famKey}/>
+            return (
+            <Suspense   fallback={<div>Loading{console.log("loading")}</div>}>
+                <Member isPartner={false} key={x} memKey={x} famKey={famKey}/>
+            </Suspense>
+            )
             })
             :null
     )
@@ -30,6 +35,7 @@ class Member extends React.Component {
             residence:'',
             children:[],
             siblings:[],
+            isPartner:false,
             partner:'',
             memEdit:false,
             addRelButtons:true,
@@ -39,8 +45,10 @@ class Member extends React.Component {
         }
         this.addRelative = this.addRelative.bind(this)
         this.memEdit = this.memEdit.bind(this)
+        this.showOptions = this.showOptions.bind(this)
     }
     addRelative(type){
+        console.log("addRelative")
         this.setState({addRelativeType:type})
     }
     memEdit(x){
@@ -69,6 +77,7 @@ class Member extends React.Component {
                         name:data.name,
                         description:data.description,
                         residence:data.residence,
+                        isPartner:this.props.isPartner,
                         partner:data.partner,
                         children:data.children,
                         siblings:data.siblings,
@@ -77,102 +86,78 @@ class Member extends React.Component {
                 })  
         }, 50);
     }
-    // Buttons for adding relatives
-    // Options() {
-    //     return(
-    //         <div className="Options">
-    //             <Button size="small" variant="outlined"
-    //             onClick={() => this.addRelative("/children/")}>AddChild
-    //             </Button>
-
-    //             <Button size="small" variant="outlined"
-    //             onClick={() => this.addRelative("/partner/")}>AddPartner
-    //             </Button>
-
-    //             <Button size="small" variant="outlined"
-    //             onClick={() => this.memEdit(true)}>EditMember
-    //             </Button>
-    //         </div>
-    // )
-        
-    // }
     render() {
       return (
         <div className="MemberComponent">
         <div className="Partners">
-            <div className="Partner">
                 {
-                !!this.state.partner && this.state.type !== "/partner/"
+                this.state.isPartner===false && !!this.state.partner
                     ?
-                    <Partner 
-                    childrenKeys={this.state.children} 
-                    memKey={this.state.partner} 
-                    famKey={this.props.famKey}
-                    addRelative={this.addRelative}
-                    memEdit={this.memEdit}
-                    />
+                    <Member isPartner="true" memKey={this.state.partner} famKey={this.props.famKey}/>
                     :null
                 }
-            </div>
 
             <div className="MemberData">
 
                 <Card onClick={()=>this.showOptions()}>
-                {/* set default image */}
+                        {/* set default image */}
 
-                <div className="imageContainer">
+                        <div className="imageContainer">
 
-                    <Avatar url={this.props.famKey+this.state.memKey}/>
+                            <Avatar url={this.props.famKey+this.state.memKey}/>
 
-                    <div className="overlay">
+                            <div className="overlay">
 
-                        <MemberShortDescription 
-                        name={this.state.name} 
-                        description={this.state.description}
-                        residence={this.state.residence}/>
+                                <MemberShortDescription 
+                                name={this.state.name} 
+                                description={this.state.description}
+                                residence={this.state.residence}/>
 
-                    </div>
+                            </div>
 
-                </div>
-                <Card.Body>
-                    <Card.Title>{this.state.name}</Card.Title>
-                </Card.Body>
+                        </div>
+                        <Card.Body>
+                            <Card.Title>{this.state.name}</Card.Title>
+                        </Card.Body>
 
-                </Card>
-        {
-            this.state.addRelativeType !== null 
-                ?<AddRelative 
-                    onMouseEnter={() => this.addRelButtons(true)} 
-                    onMouseLeave={() => this.addRelButtons(false)}
-                    type={this.state.addRelativeType} 
-                    famKey={this.props.famKey} 
-                    relKey={this.state.memKey}
-                    memList={this.props.memList}
-                    notify={this.addRelative}
-                />
-                :null
-        }
-        </div>
-        </div>
-
-        {
+                        </Card>
+                {
+                    this.state.addRelativeType !== null 
+                        ?<AddRelative 
+                            onMouseEnter={() => this.addRelButtons(true)} 
+                            onMouseLeave={() => this.addRelButtons(false)}
+                            type={this.state.addRelativeType} 
+                            famKey={this.props.famKey} 
+                            relKey={this.state.memKey}
+                            memList={this.props.memList}
+                            notify={this.addRelative}
+                        />
+                        :null
+                }
+                {
                 this.state.showOptions === true 
-                    ? 
-                    <Options addRelative={this.addRelative} memEdit={this.memEdit}/>
+                    ?
+                    <Options showOptions={()=>{this.showOptions()}} addRelative={this.addRelative} memEdit={this.memEdit}/>
                     :null
                 }
+            </div>
+        </div>
+
         {
                 this.state.memEdit === true
                 ?<MemEdit 
                 memKey={this.state.memKey} 
                 famKey={this.props.famKey}
                 memEditDisplay={this.memEdit}/>
-                :<p>{this.state.memEdit}</p>
+                :null
             }
-
-        <div className="MemberChildren">
+        {this.state.isPartner === false || "undefined"
+        ?
+        <div style={{display:"flex",justifyContent:"space-evenly"}}className="MemberChildren" >
             {GetChildren(this.state.children, this.props.famKey)}
         </div>
+        :console.log(this.state.isPartner+"jpr;d")
+        }
       </div>)
     }
 }

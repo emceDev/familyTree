@@ -2,7 +2,6 @@ import React from 'react'
 import Member from './Member'
 import AddMember from './AddMember'
 import {app} from '../db/Config'
-import { Parallax, Background } from 'react-parallax';
 class FamList extends React.Component {
     state={
         membersList:null,
@@ -32,26 +31,16 @@ class FamList extends React.Component {
             }
         }
             )}
-    previewMode(){
-        this.setState({previewMode:!this.state.previewMode})
-        const x = document.getElementsByClassName("FamList")[0].style
-        console.log(x)
-    }
+
     render() {
       return (
       <div 
       className="FamList"
       >
-        <Parallax
-            blur={{ min: -15, max: 20 }}
-            bgImage={require('../images/bark.jpg')}
-            bgImageAlt="the cat"
-            strength={500}
-        >
+
           <h1>
             FamilyList
           </h1>
-          <button onClick={()=>{this.previewMode()}}>Preview mode</button>
         {
         this.state.membersList === null 
             ? <AddMember 
@@ -63,7 +52,6 @@ class FamList extends React.Component {
             famKey={this.props.famKey}
             />
         }
-        </Parallax>
       </div>)
     }
 }

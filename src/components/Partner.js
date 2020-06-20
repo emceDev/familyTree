@@ -39,14 +39,14 @@ class Partner extends React.Component{
                             type:data.type}):
                             console.log("no data at that")
                     })  
-            }, 50);
+            }, 100);
         }
         showOptions(){
             this.setState({showOptions:!this.state.showOptions})
         }
     render(){
         return(
-            <div >
+            <div className="MemberData">
             <Card
             onClick={()=>{this.showOptions()}}>
 
@@ -72,7 +72,7 @@ class Partner extends React.Component{
             {
                 this.state.showOptions === true 
                     ? 
-                    <Options addRelative={this.props.addRelative} memEdit={this.memEdit}/>
+                    <Options showOptions={()=>{this.showOptions()}} addRelative={this.props.addRelative} memEdit={this.memEdit}/>
                     :null
                 }
             {

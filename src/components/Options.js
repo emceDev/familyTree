@@ -4,7 +4,10 @@ import { Button } from '@material-ui/core'
 
 export const Options = props =>{
     return(
-        <div className="Options">
+        <div className="OptionsOverlay">
+        <div 
+        onMouseLeave={()=>{props.showOptions()}}
+        className="Options">
             <Button size="small" variant="outlined"
             onClick={() => props.addRelative("/children/")}>AddChild
             </Button>
@@ -16,6 +19,7 @@ export const Options = props =>{
             <Button size="small" variant="outlined"
             onClick={() => props.memEdit(true)}>EditMember
             </Button>
+        </div>
         </div>
     )
 }
