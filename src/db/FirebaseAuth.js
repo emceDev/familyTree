@@ -8,6 +8,7 @@ export const signInPopup = (cb) => {
 firebase.auth().signInWithPopup(provider).then(function(result) {
     var user = result.user;
     addUserToDb(user.uid, user.displayName, user.photoURL, user.email)
+    console.log("succes")
     cb()
   }).catch(function(error) {
     console.log(error)

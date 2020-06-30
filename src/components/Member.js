@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react'
+import React from 'react'
 import {listenMemberData} from '../db/Queries2'
 import Card from 'react-bootstrap/Card'
 import Partner from './Partner'
@@ -16,9 +16,7 @@ function GetChildren(children,famKey){
         !!children ?
         children.map(x =>{
             return (
-            <Suspense   fallback={<div>Loading{console.log("loading")}</div>}>
                 <Member isPartner={false} key={x} memKey={x} famKey={famKey}/>
-            </Suspense>
             )
             })
             :null

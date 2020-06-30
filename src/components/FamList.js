@@ -37,7 +37,6 @@ class FamList extends React.Component {
       <div 
       className="FamList"
       >
-
           <h1>
             FamilyList
           </h1>

@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import React, { Children } from 'react'
 import {app} from './Config'
-import {getFromLocalStorage, addToLocalStorage,logOut} from '../localStorage/user'
+import {getAvatars, addToLocalStorage,logOut} from '../localStorage/user'
 
 
 // Creating family
@@ -15,20 +15,18 @@ export const familyMemberKeys = (memKey,famKey) => {
     var famKeysArray=[memKey,]
 
     famKeys.once('value', snap => 
-    {
-      if( !!snap.val() ){
-        snap.val().map( key => {
-        famKeysArray.push(key)
+      {
+        if( !!snap.val() ){
+          snap.val().map( key => {
+          famKeysArray.push(key)
+        })
+        }
+        else{
+          return null
+        }
+      famKeys.set(famKeysArray)
       })
-      }
-      else{
-        return null
-      }
-    famKeys.set(famKeysArray)
-      })
-      
 }
-
 export const addToMembers = (memKey,data)=>{
     setTimeout(() => {
         app.database().ref('members/' + memKey + '/').update(data)
@@ -91,7 +89,6 @@ export const addUserToDb = (uid,displayName,photoURL,email) => {
     }
 })
 }
-
 export const setLogOut = () =>{
     const uid = JSON.parse(window.localStorage.getItem('user')).uid
     app.database().ref('users/' + uid + '/').update({isLoggedIn:false})
