@@ -91,7 +91,7 @@ class Member extends React.Component {
                 {
                 this.state.isPartner===false && !!this.state.partner
                     ?
-                    <Member isPartner="true" memKey={this.state.partner} famKey={this.props.famKey}/>
+                    <Member isPartner={true} memKey={this.state.partner} famKey={this.props.famKey}/>
                     :null
                 }
 
@@ -102,7 +102,7 @@ class Member extends React.Component {
 
                         <div className="imageContainer">
 
-                            <Avatar url={this.props.famKey+this.state.memKey}/>
+                            <Avatar url={this.props.famKey+"/"+this.props.memKey}/>
 
                             <div className="overlay">
 
@@ -149,12 +149,12 @@ class Member extends React.Component {
                 memEditDisplay={this.memEdit}/>
                 :null
             }
-        {this.state.isPartner === false || "undefined"
-        ?
-        <div style={{display:"flex",justifyContent:"space-evenly"}}className="MemberChildren" >
-            {GetChildren(this.state.children, this.props.famKey)}
-        </div>
-        :console.log(this.state.isPartner+"jpr;d")
+        {
+            this.state.isPartner === true 
+            ?null
+            :<div style={{display:"flex",justifyContent:"space-evenly"}}className="MemberChildren" >
+                {GetChildren(this.state.children, this.props.famKey)}
+            </div>
         }
       </div>)
     }

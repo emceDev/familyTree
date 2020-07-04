@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {Image} from 'cloudinary-react'
-import defaultAvatar from 'https://res.cloudinary.com/m4t1ce/image/upload/c_scale,h_150,w_130/v1589569855/default_ts45ax.jpg'
+import axios from 'axios'
+import defaultAvatar from '../images/default.jpeg'
+
 export const Avatar = (props) =>{
-    return(
-        <Image 
-        cloudName="m4t1ce" 
-        publicId={props.url}
-        onError={
-            e=>{e.target.src=defaultAvatar}}
-        >
-        </Image>
-    )
-}
+    const [data, setData] = useState()
+    const [load,setLoad] = useState(false)
+    useEffect(() => {
+        axios.get('http://res.cloudinary.com/m4t1ce/image/upload/v1/'+props.url)
+            .then(res => {
+                setData(res)
+                setLoad(true);
+            })
+            .catch(err => {
+                console.log("XD"+err.message)
+            })
+    }, []);
+
+    if (load===true){
+        return(
+            // <img src=" " alt="xd"></img>
+            <Image 
+            cloudName="m4t1ce" 
+            publicId={props.url}
+            >
+            </Image>
+        )}
+    else{
+        return(
+            // <img src={defaultAvatar} alt="x"></img>
+            <img src={defaultAvatar} alt="dd"></img>
+        )
+        }
+    }

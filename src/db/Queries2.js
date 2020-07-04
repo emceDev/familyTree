@@ -1,7 +1,8 @@
 import firebase from 'firebase'
 import React, { Children } from 'react'
 import {app} from './Config'
-import {getAvatars, addToLocalStorage,logOut} from '../localStorage/user'
+import { addToLocalStorage,logOut} from '../localStorage/user'
+import imageLoader from '../components/ImageLoader'
 
 
 // Creating family
