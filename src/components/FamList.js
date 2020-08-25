@@ -2,25 +2,46 @@ import React from 'react'
 import Member from './Member'
 import AddMember from './AddMember'
 import {app} from '../db/Config'
+import Navigation from '../components/Navigation'
+import {FamiliesList} from '../components/FamiliesList'
+import {LinkToFamily} from '../components/LinkToFamily'
+import {checkPermissions} from '../db/Queries2'
+
 class FamList extends React.Component {
-    state={
+    constructor() {
+        super();
+    this.state={
         membersList:null,
         vw:'',
         vh:'',
-        previewMode:true
+        previewMode:true,
+        famKey:'',
+        typeOfUser:undefined
     }
+    this.setDefault = this.setDefault.bind(this);
+}
     componentDidMount(){
-        this.checkIfEmpty()
-        this.setState({vw:window.innerWidth,vh:window.innerHeight})
-        //get family members
+        // console.log("fam list MOunted")
+        this.setState({vw:window.innerWidth, vh:window.innerHeight})
+        // console.log("famkisr"+famKey)
+        if(this.state.famKey !== ''){
+            this.checkIfEmpty(this.state.famKey)
+        }else{
+
+        }
+    }    
+    setDefault(x){
+         this.setState({famKey:x})
+         this.checkIfEmpty(x)
+         checkPermissions(x, (z)=>{this.setState({typeOfUser:z})})
     }
     //members array settings
-    checkIfEmpty(){
-        const members = app.database().ref('/families/' + this.props.famKey +'/memKeys/')
+    checkIfEmpty(famKey){
+        const members = app.database().ref('/families/' + famKey +'/memKeys/')
 
         members.on('value',snap => {
             var membersArray=[]
-
+            // console.log(snap.val())
             if (snap.val() === null){
                 this.setState({membersList:null})
             }else{
@@ -37,18 +58,28 @@ class FamList extends React.Component {
       <div 
       className="FamList"
       >
+          <Navigation/>
+          <div className="FamListContainer">
           <h1>
-            FamilyList
+            Family tree
           </h1>
+
+          <FamiliesList setDefault={this.setDefault} className="FamiliesList"/>
+            <LinkToFamily />
+          </div>
+
         {
-        this.state.membersList === null 
-            ? <AddMember 
-            famKey={this.props.famKey}
+            this.state.typeOfUser === undefined
+            ? console.log('undefined type of user')
+            :this.state.membersList === null
+            ?<AddMember 
+            famKey={this.state.famKey}
             />
             :<Member 
             key={this.state.membersList[this.state.membersList.length-1]} 
             memKey={this.state.membersList[this.state.membersList.length-1]} 
-            famKey={this.props.famKey}
+            famKey={this.state.famKey}
+            typeOfUser={this.state.typeOfUser}
             />
         }
       </div>)

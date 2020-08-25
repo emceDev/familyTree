@@ -1,156 +1,12 @@
-
+import firebase from 'firebase'
+import React, { Children } from 'react'
 import {app} from './Config'
-import { addToLocalStorage,getFromLocalStorage,logOut} from '../localStorage/user'
-
-const uid = getFromLocalStorage().uid
+import { addToLocalStorage,logOut} from '../localStorage/user'
+import imageLoader from '../components/ImageLoader'
 
 
 // Creating family
-export const createFamily = (famName,password,cb) =>{
-  const famKey = app.database().ref('/families/').push()
-  famKey.set({
-    famName:famName,
-    creator:uid,
-    editors:[uid],
-    visitors:[],
-    memKeys:[],
-    password:password
-  })
-  const famKeys = app.database().ref('users/' + uid +'/famKeys')
-  var familykeys = []
-  
-  famKeys.once('value',snap => {
 
-    familykeys.push(famKey.key)
-    var user = localStorage.getItem('user')
-    var userUpdate2 = user ? JSON.parse(user) : {}
-
-    if(snap.val()!==null){
-      if(snap.val().familykeys.length===1){
-        familykeys.push(snap.val().familykeys[0])
-        userUpdate2['famKey'] = familykeys
-        localStorage.setItem('user',JSON.stringify(userUpdate2))
-  
-        famKeys.update({familykeys})
-        
-      }else if(snap.val().familykeys.length > 1){
-        snap.val().familykeys.map(x=>{
-        familykeys.push(x)
-        userUpdate2['famKey'] = familykeys
-        localStorage.setItem('user',JSON.stringify(userUpdate2))
-      })
-
-      famKeys.update({familykeys})
-      }
-    }else{
-        userUpdate2['famKey'] = familykeys
-        localStorage.setItem('user',JSON.stringify(userUpdate2))
-        famKeys.update({familykeys})
-      }
-    }
-  )
-cb('finished!')
-}
-//Deleting family
-export const checkEditors = ()=>{
-  
-}
-export const deleteFamily = (password,famkey)=>{
-
-
-  var user = localStorage.getItem('user')
-
-  var userUpdate2 = user ? JSON.parse(user) : {}
-
-  
-  const family = app.database().ref('families/' + famkey)
-  
-  var editors = undefined
-  family.once('value', snap =>{
-    if (snap.val() !== null)
-    {
-      editors = snap.val().editors
-    }
-    else{
-      return
-    }
-
-    if(editors.find((ed) => ed === uid)===undefined || password !== snap.val().password){
-      console.log("editor!==uid or incorrect password")
-    }else{
-      family.remove()
-      let index = userUpdate2.famKey.findIndex(x=>x===famkey)
-      userUpdate2.famKey.splice(index,index+1)
-      localStorage.setItem('user',JSON.stringify(userUpdate2))
-
-      var keys = []
-      var familykeys = app.database().ref('users/' + uid + '/famKeys/familykeys')
-
-      familykeys.once('value', snap=>{
-        let index = snap.val().findIndex(x=>x===famkey)
-        keys = snap.val()
-        keys.splice(index,index+1)
-        familykeys.set(keys)
-        })
-    }
-  })  
-}
-export const addEditors = () =>{
-  
-}
-// FamAdmin
-export const handleLinkAdd = (cb,famkey,password) =>{
-  console.log(famkey , "password :",password)
-  var visitors = [uid,]
-  var  fam = app.database().ref('families/'+famkey);
-  // check if family exists
-
-  fam.once('value', snap =>{
-      snap.val() === null
-      ?cb("no family found")
-      :snap.val().visitors === undefined
-        ?console.log('creating visitors place in db')
-        :snap.val().visitors.find(x => uid===x)
-          ?cb("already in visitors")
-          :snap.val().visitors.map(v=>{
-            visitors.push(v)
-          });
-          fam.child('visitors').set(visitors)
-      
-      // cb("added to visitors")
-    })
-}
-export const updateList = (cb,famkey) =>{
-  const fam = app.database().ref('families/' + famkey);
-  fam.child('editors').on('value', snap =>{
-    snap.val()===null
-    ?cb('no editors')
-    :snap.val().map(e=>{cb('editor',e)})
-  })
-  fam.child('visitors').on('value', snap =>{
-    snap.val()===null
-    ?cb('no visitors')
-    :snap.val().map(v=>{cb('visitor',v)})
-  })
-  
-}
-export const getEmail = x =>{
-  return app.database().ref('users/' + x).once('value', snap=>{
-    snap.val()
-  })
-}
-export const setPermissions = () =>{
-  // moving aroun de daetybejz
-
-}
-// gettin family name
-export const GetFamName = (famKey) =>{
-
-    const fam = app.database().ref('families/'+famKey+'/famName/');
-    return fam.once('value', snap =>{
-      return snap.val().key
-      })
-}
 // Adding Relative
 export const getKey = (type) => app.database().ref(type).push().key
 
@@ -201,7 +57,9 @@ export const addMemberToDb = (relKey,memKey,type,) => {
 export const listenMemberData = memKey => {
   return app.database().ref('/members/' + memKey)
 }
-
+export const createFamily = (uid,famKey) =>{
+  // app.database().ref('/families/').push(famKey)
+}
 // adding user and deciding if he exists then login him
 export const addUserToDb = (uid,displayName,photoURL,email) => {
 
@@ -220,13 +78,15 @@ export const addUserToDb = (uid,displayName,photoURL,email) => {
   user.once('value', snap => {
     // if not exist
     if( snap.val() === null ){
+      // delete
+      userData.famKey = app.database().ref('users/').push().key
+      
       userLocationInDb.update(userData)
       addToLocalStorage(userData)
-      addToLocalStorage({"first visit":true})
     }
     // if exists
     else{
-      const getFamKey = app.database().ref('users/' + uid + '/famKeys/familykeys/')
+      const getFamKey = app.database().ref('users/' + uid + '/famKey')
       getFamKey.once('value',snap=>{
         userData.famKey=snap.val()
         addToLocalStorage(userData)
@@ -243,23 +103,6 @@ export const setLogOut = () =>{
 
 export const listenUserData = uid => {
   return app.database().ref('users/' + uid)
-}
-// check user permissions
-export const checkPermissions = (famKey, callback) => {
-  const uid = JSON.parse(localStorage.getItem('user')).uid
-  var famEditors = app.database().ref('families/' + famKey + '/editors')
-
-  famEditors.once('value', snap=>{
-    var type = 'sdf'
-    if(snap.val().find((ed) => ed === uid)===undefined){
-      // app.database().ref('families/'+famKey+'/creators').once
-      console.log(snap.val())
-    }else{
-      callback('editor')
-    }
-    return type
-  })
-  // console.log(uid +"jajko" + famKey) 
 }
 // editingMember
 export const editMember = data => {

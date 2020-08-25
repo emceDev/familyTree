@@ -13,6 +13,18 @@
 a{
     text-decoration: none;
 }
+.FamAdmin :only-child{
+    display: flex;
+    flex-direction: column;
+}
+.FamAdmin{
+    width: fit-content;
+    margin: 0 auto;
+}
+.FamAdmin div{
+    display: flex;
+    flex-direction: column;
+}
 
 .card{
     background-color: rgba(0, 100, 0, 0.644);
@@ -168,10 +180,61 @@ button{
     background-repeat: no-repeat;
     background-size: cover;
 }
+.FamListContainer{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.FamListContainer h1{
+}
+.FamiliesList{
+    background-color: rgba(37, 149, 3, 0.397);
+    position: relative;
+    margin-left: 1%;
+    list-style-position: inside;
+    width: fit-content;
+}
+.FamiliesList :hover{
+    background-color: rgba(38, 149, 3, 0.657);
+}
+
+.FamiliesList p{
+    font-size:small;
+    text-align:center;
+}
+.listContent{
+    padding-left: 20%;
+    position: absolute;
+    z-index: 1000;
+    background-color: rgba(38, 149, 3, 0.657);
+}
+
+/* .FamiliesList ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+.FamiliesList :first-of-type p{
+    font-size: large;
+}
+.FamiliesList ol {
+    padding: 0%;
+    background-color: rgba(0, 128, 0, 0.52);
+    border-radius: 4%;
+    margin-top: 1%;
+} */
 ::-webkit-scrollbar {
     display: none;
 }
-
+.FirstMember {
+    margin:0 auto;
+    width: fit-content;
+    padding: 2%;
+    background-color: rgba(0, 128, 0, 0.925);
+    display: flex;
+    flex-direction: column;
+}
 
 @media only screen and (max-width: 600px) {
     .FamList{

@@ -11,12 +11,12 @@ import {Options }from './Options'
 
 
 
-function GetChildren(children,famKey){
+function GetChildren(children,famKey,typeOfUser){
     return(
         !!children ?
         children.map(x =>{
             return (
-                <Member isPartner={false} key={x} memKey={x} famKey={famKey}/>
+                <Member isPartner={false} key={x} memKey={x} famKey={famKey} typeOfUser={typeOfUser}/>
             )
             })
             :null
@@ -91,7 +91,7 @@ class Member extends React.Component {
                 {
                 this.state.isPartner===false && !!this.state.partner
                     ?
-                    <Member isPartner={true} memKey={this.state.partner} famKey={this.props.famKey}/>
+                    <Member isPartner={true} memKey={this.state.partner} famKey={this.props.famKey} typeOfUser={this.props.typeOfUser}/>
                     :null
                 }
 
@@ -133,7 +133,7 @@ class Member extends React.Component {
                         :null
                 }
                 {
-                this.state.showOptions === true 
+                this.state.showOptions === true && this.props.typeOfUser === 'editor'
                     ?
                     <Options showOptions={()=>{this.showOptions()}} addRelative={this.addRelative} memEdit={this.memEdit}/>
                     :null
@@ -153,7 +153,7 @@ class Member extends React.Component {
             this.state.isPartner === true 
             ?null
             :<div style={{display:"flex",justifyContent:"space-evenly"}}className="MemberChildren" >
-                {GetChildren(this.state.children, this.props.famKey)}
+                {GetChildren(this.state.children, this.props.famKey, this.props.typeOfUser)}
             </div>
         }
       </div>)

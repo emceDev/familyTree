@@ -1,10 +1,10 @@
 import React from 'react';
-import Navigation from './components/Navigation'
 import { Switch, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import './App.css';
 import UserLogged from './pages/UserLogged';
-import FamMgmt from './components/FamMgmt'
+import FamList from './components/FamList'
+import {FamAdmin} from './pages/FamAdmin'
 import ProtectedRoute from './components/ProtectedRoute'
 function App() {
   return (
@@ -16,8 +16,12 @@ function App() {
         component={UserLogged}
         />
         <ProtectedRoute
-        exact path="/FamMgmt"
-        component={FamMgmt}
+        exact path="/FamAdmin"
+        component={FamAdmin}
+        />
+        <ProtectedRoute
+        exact path="/FamList"
+        component={FamList}
         />
         <Route  path="*" component={()=><p>404 not found</p>} />
       </Switch>

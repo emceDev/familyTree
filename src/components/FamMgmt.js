@@ -10,8 +10,9 @@ class FamMgmt extends React.Component {
         dragToscroll:false
     }
     componentDidMount(){
-        const famKey = getFromLocalStorage().famKey
+        let famKey = JSON.parse(localStorage.getItem('user')).famKey
         this.setState({famKey:famKey})
+        console.log(this.state.famKey+'asd')
     }
     handleChange(e){
         this.setState({famName:e.target.value})

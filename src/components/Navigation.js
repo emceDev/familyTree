@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import {Link, Router} from 'react-router-dom'
+import React from 'react';
+import {Link} from 'react-router-dom'
 import Login from './Login';
-import {getFromLocalStorage} from '../localStorage/user'
 import {AppBar,Toolbar,Typography,Button} from '@material-ui/core'
+
   function Navigation(props){
     return(
       <div>
@@ -14,10 +14,15 @@ import {AppBar,Toolbar,Typography,Button} from '@material-ui/core'
               </Link>
             </Button>
           </Typography>
-          {!!getFromLocalStorage()
-          ?<Button variant="outlined"><Link to="FamMgmt" id="FamMgmt">Manage Your family tree here</Link></Button>
-          :null
-          }
+          <Button variant="outlined">
+            <Link to="FamList" id="FamList">FamilyTree
+            </Link>
+          </Button>
+          <Button variant="outlined">
+            <Link to="FamAdmin" id="FamAdmin">FamilyAdmin
+            </Link>
+          </Button>
+          
           <Login history={props.history}/>
         </Toolbar>
       </AppBar>

@@ -22,7 +22,7 @@ class AddMember extends React.Component {
     }
     PostMember(){
         setTimeout(() => {
-            var famKey = this.props.famKey
+            var famKey = JSON.parse(localStorage.getItem('user')).famKey
             app.database().ref('members/' + this.state.memKey + '/').update(this.state)
             app.database().ref('families/' + famKey).update({'/memKeys/':[this.state.memKey]})
         }, 1000);

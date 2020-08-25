@@ -1,0 +1,32 @@
+1.Make place editor in db.>>>
+2.Ask User if he wants to create family
+YES{
+    3
+}
+No{
+    4
+}
+3.Administrator panel:
+ 1.Creating/deleting family>>
+ 2.Ability to 
+    give permissions to users via UID/email address, 
+    give links to users>>
+
+4.Observers panel:
+ Ask for link to family and password
+
+Security:
+    Editing family can only be granted to permited users ie UID
+
+Observer logged in => has famKey => is asked for password 
+famkey:password=123456
+
+Famlist 
+
+
+Family list{
+    <list of families in localstorage> null >
+    <visit family input sets famkey and asks for password>
+    <link to FamAdmin>create family<link>
+}
+ 
