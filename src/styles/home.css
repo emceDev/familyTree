@@ -1,213 +1,217 @@
-.Home{
-    width: 100vw;
-    height: 100vh;
-    background-image: url('../images/tree.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+.Home {
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../images/tree.jpg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 .App {
-    text-align: center;
-    color:rgb(35, 44, 97);
+	text-align: center;
+	color: rgb(35, 44, 97);
 }
-a{
-    text-decoration: none;
+a {
+	text-decoration: none;
 }
-.FamAdmin :only-child{
-    display: flex;
-    flex-direction: column;
+.FamAdmin :only-child {
+	display: flex;
+	flex-direction: column;
 }
-.FamAdmin{
-    width: fit-content;
-    margin: 0 auto;
-}
-.FamAdmin div{
-    display: flex;
-    flex-direction: column;
+.FamAdmin {
+	width: fit-content;
+	margin: 0 auto;
 }
 
-.card{
-    background-color: rgba(0, 100, 0, 0.644);
-    border-radius: 25% 25% 4% 4%;
+.card {
+	background-color: rgba(0, 100, 0, 0.644);
+	border-radius: 25% 25% 4% 4%;
 }
-.Partners{
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
+.Partners {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
 }
-button{
-    background-color: brown;
+button {
+	background-color: brown;
 }
-@keyframes appear{
-    0%{opacity:0}
-    100%{opacity:1}
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
-.MemEdit{
-    /* position: absolute; */
-    background-color: rgba(5, 88, 5, 0.959);
-    color:black;
-    width: 50vw;
-    height: 50vh;
-    margin-top: 25vh;
-    margin-left: 25vw;
-    z-index: 112;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+.MemEdit {
+	/* position: absolute; */
+	background-color: rgba(5, 88, 5, 0.959);
+	color: black;
+	width: 50vw;
+	height: 50vh;
+	margin-top: 25vh;
+	margin-left: 25vw;
+	z-index: 112;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
 }
-.MemEditOverlay{
-    z-index: 110;
-    position: fixed;
-    left: 0;
-    top:0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(5, 88, 5, 0.76)
+.MemEditOverlay {
+	z-index: 110;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(5, 88, 5, 0.76);
 }
-::placeholder{
-    color:black;
-    text-align: center;
+::placeholder {
+	color: black;
+	text-align: center;
 }
-.MemEditOverlay button{
-    background-color: rgb(7, 47, 7);
-    margin:0 auto;
-    width: 50%;
+.MemEditOverlay button {
+	background-color: rgb(7, 47, 7);
+	margin: 0 auto;
+	width: 50%;
 }
-.MemberData{
-    display: flex;
+.MemberData {
+	display: flex;
 }
-@keyframes MemberAppear{
-    0%{margin-top: -100%;}
-    100%{margin-top: 0%;}
+@keyframes MemberAppear {
+	0% {
+		margin-top: -100%;
+	}
+	100% {
+		margin-top: 0%;
+	}
 }
-.MemberComponent{
-    animation: MemberAppear 3s ease-in-out;
-    margin-left: 1vw;
+.MemberComponent {
+	animation: MemberAppear 3s ease-in-out;
+	margin-left: 1vw;
 }
-/* card body */ 
-.imageContainer{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-.imageContainer img{
-    border-radius: 20%;
+/* card body */
+.imageContainer {
+	display: flex;
+	flex-direction: column;
+	position: relative;
 }
-  .overlay{
-    border-radius: 20%;
-    position: absolute;
-    bottom: 0;
-    left: 0%;
-    right: 0;
-    background-color:rgba(17, 92, 17, 0.76);
-    overflow: hidden;
-    width: 0;
-    height: 100%;
-    transition: .5s ease;
-  }
-  .imageContainer:hover .overlay{
-    width: 100%;
-    left: 0;
-  }
+.imageContainer img {
+	border-radius: 20%;
+}
+.overlay {
+	border-radius: 20%;
+	position: absolute;
+	bottom: 0;
+	left: 0%;
+	right: 0;
+	background-color: rgba(17, 92, 17, 0.76);
+	overflow: hidden;
+	width: 0;
+	height: 100%;
+	transition: 0.5s ease;
+}
+.imageContainer:hover .overlay {
+	width: 100%;
+	left: 0;
+}
 
-.addRelativeForm{
-    background-color: rgb(5, 88, 5);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 40vh;
-    width: 20vw;
-    margin-left: 40vw;
-    margin-top:30vh;
-    z-index: 2;
-  }
-.addRelativeFormOverlay{
-    background-color: rgba(5, 88, 5, 0.74);
-    position: fixed;
-    left: 0;
-    top:0;
-    z-index: 4;
-    width: 100vw;
-    height: 100vh;
-  }
-@keyframes slideRight{
-    0%{
-        width: 0%;
-    }
-    80%{
-        width: 11%;
-    }
-    100%{
-        width: 10%;
-    }
+.addRelativeForm {
+	background-color: rgb(5, 88, 5);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: 40vh;
+	width: 20vw;
+	margin-left: 40vw;
+	margin-top: 30vh;
+	z-index: 2;
 }
-.Options{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    margin:auto;
-    width: 10%;
-    overflow: hidden;
-    background-color: rgb(0, 100, 0);
-    z-index: 2;
-    animation: slideRight 1s; 
+.addRelativeFormOverlay {
+	background-color: rgba(5, 88, 5, 0.74);
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 4;
+	width: 100vw;
+	height: 100vh;
+}
+@keyframes slideRight {
+	0% {
+		width: 0%;
+	}
+	80% {
+		width: 11%;
+	}
+	100% {
+		width: 10%;
+	}
+}
+.Options {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	width: 10%;
+	overflow: hidden;
+	background-color: rgb(0, 100, 0);
+	z-index: 2;
+	animation: slideRight 1s;
 }
 .Options button {
-    line-height: 200%;
+	line-height: 200%;
 }
-.OptionsOverlay{
-    margin-top:25%;
-    background-color: green;
+.OptionsOverlay {
+	margin-top: 25%;
+	background-color: green;
 }
-.addRelativeButtons *{
-    height: 0%;
+.addRelativeButtons * {
+	height: 0%;
 }
-.addRelativeForm ::placeholder{
-    color:black;
+.addRelativeForm ::placeholder {
+	color: black;
 }
-.addRelativeForm button{
-    background-color: rgb(4, 66, 4);
+.addRelativeForm button {
+	background-color: rgb(4, 66, 4);
 }
-.FamList{
-    color:white;
-    -ms-overflow-style: none;
-    min-width: 100vw;
-    min-height: 100vh;
-    width: fit-content;
-    background-image: url('../images/bark.jpg');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.FamList {
+	color: white;
+	-ms-overflow-style: none;
+	min-width: 100vw;
+	min-height: 100vh;
+	width: fit-content;
+	background-image: url("../images/bark.jpg");
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
-.FamListContainer{
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-}
-
-.FamListContainer h1{
-}
-.FamiliesList{
-    background-color: rgba(37, 149, 3, 0.397);
-    position: relative;
-    margin-left: 1%;
-    list-style-position: inside;
-    width: fit-content;
-}
-.FamiliesList :hover{
-    background-color: rgba(38, 149, 3, 0.657);
+.FamListContainer {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
 }
 
-.FamiliesList p{
-    font-size:small;
-    text-align:center;
+.FamListContainer h1 {
 }
-.listContent{
-    padding-left: 20%;
-    position: absolute;
-    z-index: 1000;
-    background-color: rgba(38, 149, 3, 0.657);
+.FamiliesList {
+	background-color: rgba(37, 149, 3, 0.397);
+	position: relative;
+	margin-left: 1%;
+	list-style-position: inside;
+	width: fit-content;
+}
+.FamiliesList :hover {
+	background-color: rgba(38, 149, 3, 0.657);
+}
+
+.FamiliesList p {
+	font-size: small;
+	text-align: center;
+}
+.listContent {
+	padding-left: 20%;
+	position: absolute;
+	z-index: 1000;
+	background-color: rgba(38, 149, 3, 0.657);
 }
 
 /* .FamiliesList ul {
@@ -225,46 +229,46 @@ button{
     margin-top: 1%;
 } */
 ::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 .FirstMember {
-    margin:0 auto;
-    width: fit-content;
-    padding: 2%;
-    background-color: rgba(0, 128, 0, 0.925);
-    display: flex;
-    flex-direction: column;
+	margin: 0 auto;
+	width: fit-content;
+	padding: 2%;
+	background-color: rgba(0, 128, 0, 0.925);
+	display: flex;
+	flex-direction: column;
 }
 
 @media only screen and (max-width: 600px) {
-    .FamList{
-        background-image:url(../images/bark640.jpg)
-    }
-    .Home{
-        background-image:url(../images/tree640.jpg)
-    }
-  }
-  @media only screen and (max-width: 768px) {
-    .FamList{
-        background-image:url(../images/bark768.jpg)
-    }
-    .Home{
-        background-image:url(../images/tree768.jpg)
-    }
-  }
-  @media only screen and (max-width: 1024px) {
-    .FamList{
-        background-image:url(../images/bark1024.jpg)
-    }
-    .Home{
-        background-image:url(../images/tree1024.jpg)
-    }
-  }
-  @media only screen and (max-width: 1200px) {
-    .FamList{
-        background-image:url(../images/bark1200.jpg)
-    }
-    .Home{
-        background-image:url(../images/tree1200.jpg)
-    }
-  }
+	.FamList {
+		background-image: url(../images/bark640.jpg);
+	}
+	.Home {
+		background-image: url(../images/tree640.jpg);
+	}
+}
+@media only screen and (max-width: 768px) {
+	.FamList {
+		background-image: url(../images/bark768.jpg);
+	}
+	.Home {
+		background-image: url(../images/tree768.jpg);
+	}
+}
+@media only screen and (max-width: 1024px) {
+	.FamList {
+		background-image: url(../images/bark1024.jpg);
+	}
+	.Home {
+		background-image: url(../images/tree1024.jpg);
+	}
+}
+@media only screen and (max-width: 1200px) {
+	.FamList {
+		background-image: url(../images/bark1200.jpg);
+	}
+	.Home {
+		background-image: url(../images/tree1200.jpg);
+	}
+}

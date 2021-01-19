@@ -1,28 +1,78 @@
-import React, {useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { handleLinkAdd } from "../db/Queries2";
+import { TextField, Button } from "@material-ui/core";
 
 export const LinkToFamily = () => {
-    const [password, setPassword] = useState('')
-    const [link, setLink] = useState('');
-
-    function cb(x){
-        console.log("cb")
-        console.log(x)
-    }
-    function handleSubmit(){
-        password.length < 6
-        ?handleLinkAdd(cb,link)
-        :handleLinkAdd(cb,link, password)
-    }
-    return(
-        <div style={{display:'flex', flexDirection:'column'}}>
-            <label>paste your link here
-                <input type='text' onChange={e=>{setLink(e.target.value)}}></input>
-            </label>
-            <label>type password here
-                <input type='text' onChange={e=>{setPassword(e.target.value)}}></input>
-            </label>
-            <button onClick={()=>{handleSubmit()}}>Submit</button>
-        </div>
-    )
-}
+	const [password, setPassword] = useState("");
+	const [link, setLink] = useState("");
+	const [display, setDisplay] = useState(false);
+	const [error, setError] = useState("use your link here");
+	function cb(err, x) {
+		setDisplay(!err);
+		setError(x);
+		document.getElementById("error").innerText = error;
+	}
+	function handleSubmit() {
+		password.length < 6 || link.length < 10
+			? setError("invalid link or password")
+			: handleLinkAdd(cb, link, password);
+	}
+	return (
+		<div className="LinkToFamily" className="LinkToFamily">
+			{display === false ? (
+				<Button
+					color="primary"
+					variant="outlined"
+					size="large"
+					onClick={() => {
+						setDisplay(!display);
+					}}
+				>
+					Link
+				</Button>
+			) : (
+				<div
+					style={{
+						display: display ? "flex" : "none",
+						position: display ? "absolute" : "block",
+						flexDirection: "column",
+					}}
+				>
+					<p
+						id="error"
+						onClick={() => {
+							setDisplay(!display);
+						}}
+					>
+						{error}
+					</p>
+					<TextField
+						color="secondary"
+						id="standard-basic"
+						label="paste your link here"
+						onChange={(e) => {
+							setLink(e.target.value);
+						}}
+					/>
+					<TextField
+						id="standard-basic"
+						color="secondary"
+						label="type family password here"
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+					/>
+					<Button
+						color="secondary"
+						variant="contained"
+						onClick={() => {
+							handleSubmit();
+						}}
+					>
+						Submit
+					</Button>
+				</div>
+			)}
+		</div>
+	);
+};

@@ -1,13 +1,13 @@
-import firebase from 'firebase'
+import firebase from "firebase";
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyA0FaS800RTtpHhRKMVrlDZ7jlqng8S2Zo",
-    authDomain: "apitests-d25a6.firebaseapp.com",
-    databaseURL: "https://apitests-d25a6.firebaseio.com",
-    projectId: "apitests-d25a6",
-    storageBucket: "apitests-d25a6.appspot.com",
-    messagingSenderId: "703056296501",
-    appId: "1:703056296501:web:a4ff0e98cd4b5dd9848f7c"
-  };
-  
-export const app = firebase.initializeApp(firebaseConfig)
+	apiKey: process.env.API_KEY,
+	authDomain: process.env.AUTH_DOMAIN,
+	databaseURL: process.env.DATABASE_URL,
+	projectId: process.env.PROJECT_ID,
+	storageBucket: process.env.STORAGE_BUCKET,
+	messagingSenderId: process.env.MESSAGING_SENDER_ID,
+	appId: process.env.APP_ID,
+};
+
+export const app = firebase.initializeApp(firebaseConfig);
