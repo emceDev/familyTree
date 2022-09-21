@@ -42,7 +42,7 @@ class FamList extends React.Component {
 
 		members.on("value", (snap) => {
 			var membersArray = [];
-			// console.log(snap.val())
+			console.log(snap.val());
 			if (snap.val() === null) {
 				this.setState({ membersList: null });
 			} else {
@@ -65,7 +65,7 @@ class FamList extends React.Component {
 				</div>
 
 				{this.state.typeOfUser === undefined ? (
-					console.log("undefined type of user")
+					console.log("undefined type of user", this.state)
 				) : this.state.membersList === null ? (
 					<AddMember famKey={this.state.famKey} />
 				) : (

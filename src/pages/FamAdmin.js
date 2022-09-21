@@ -102,7 +102,7 @@ export const FamAdmin = () => {
 	return (
 		<div className="FamAdminContainer">
 			<Navigation />
-			{console.log(Button)}
+			{/* {console.log(Button)} */}
 
 			{/* <FamNames/> */}
 			<div className="FamAdmin">
